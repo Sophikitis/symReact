@@ -2,10 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
+ * @ApiResource(
+ *     attributes={
+
+ *     "pagination_enabled"=true,
+ *     "pagination_items_per_page"=20,
+ *     "order"= {"amount": "desc"}
+ *  }
+ * )
+ * @ApiFilter(OrderFilter::class, properties={"amount", "sentAt"})
+
  */
 class Invoice
 {
@@ -19,7 +33,7 @@ class Invoice
     /**
      * @ORM\Column(type="float")
      */
-    private $amout;
+    private $amount;
 
     /**
      * @ORM\Column(type="datetime")
@@ -47,14 +61,14 @@ class Invoice
         return $this->id;
     }
 
-    public function getAmout(): ?float
+    public function getAmount(): ?float
     {
-        return $this->amout;
+        return $this->amount;
     }
 
-    public function setAmout(float $amout): self
+    public function setAmount(float $amount): self
     {
-        $this->amout = $amout;
+        $this->amount = $amount;
 
         return $this;
     }
