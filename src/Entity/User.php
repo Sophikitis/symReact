@@ -16,7 +16,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"users_read"}}
+ * )
  * @UniqueEntity("email", message="L'adresse mail est déja utilisé")
  */
 class User implements UserInterface
@@ -31,7 +33,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresource", "users_read"})
      * @Assert\NotBlank(message="L'adresse email du customer est obligatoire")
      * @Assert\Email(message="Le format de l'adresse email doit etre valide")
      */
@@ -51,7 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresource", "users_read"})
      * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Assert\Length(min=3, minMessage="Le prénom doit faire entre 3 et 255 caractères", max=255, maxMessage="Le prénom doit faire entre 3 et 255 caractères")
      */
@@ -59,7 +61,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresource"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresource", "users_read"})
      * @Assert\NotBlank(message="Le nom est obligatoire")
      * @Assert\Length(min=3, minMessage="Le nom de famille doit faire entre 3 et 255 caractères", max=255, maxMessage="Le nom de famille doit faire entre 3 et 255 caractères")
      */
